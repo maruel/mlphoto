@@ -30,19 +30,23 @@ def load_model(device, use_style):
   photomaker_path = huggingface_hub.hf_hub_download(
       repo_id="TencentARC/PhotoMaker-V2", filename="photomaker-v2.bin",
       repo_type="model")
+  #root = "SG161222/RealVisXL_V4.0"
+  root = "segmind/SSD-1B"
   pipe = photomaker.PhotoMakerStableDiffusionXLPipeline.from_pretrained(
-        "SG161222/RealVisXL_V4.0", torch_dtype=torch_dtype).to(device)
+        root, torch_dtype=torch_dtype).to(device)
   if use_style:
     pipe.load_ip_adapter("h94/IP-Adapter", subfolder="sdxl_models",
                         weight_name="ip-adapter_sdxl.bin")
     pipe.set_ip_adapter_scale(0.7)
+  #pipe.load_lora_weights("latent-consistency/lcm-lora-ssd-1b")
   # Load PhotoMaker checkpoint.
   pipe.load_photomaker_adapter(
       os.path.dirname(photomaker_path),
       subfolder="",
       weight_name=os.path.basename(photomaker_path),
       trigger_word="img"  # define the trigger word
-  )     
+  )
+  #pipe.set_adapters(["lcm-lora", "photomaker"], adapter_weights=[1.0, 1.0])
   pipe.fuse_lora()
   pipe.scheduler = diffusers.EulerDiscreteScheduler.from_config(pipe.scheduler.config)
   if device == "cuda":
@@ -101,6 +105,8 @@ def generate(pipe, device, images, style_images, prompt, num_steps, num_images,
       num_inference_steps=num_steps,
       start_merge_step=10,
       generator=generator,
+      width=1216,
+      height=832,
       **kwargs).images
   print(f"  done in {time.time()-start:.1f}s")
   return images
