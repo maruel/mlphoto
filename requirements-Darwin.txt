@@ -1,4 +1,4 @@
-accelerate==0.32.1
+accelerate==0.33.0
 albucore==0.0.12
 albumentations==1.4.11
 annotated-types==0.7.0
@@ -35,8 +35,8 @@ onnx==1.16.1
 onnxruntime==1.18.1
 opencv-python-headless==4.10.0.84
 packaging==24.1
-peft==0.11.1
-photomaker @ file:///Users/maruel/src-oth/PhotoMaker
+peft==0.12.0
+photomaker @ git+https://github.com/TencentARC/PhotoMaker.git@e5b728c2b297dc28ef35fbe4930cf8ab2fa969ea
 pillow==10.4.0
 prettytable==3.10.2
 protobuf==5.27.2
@@ -62,7 +62,7 @@ tomli==2.0.1
 torch==2.3.1
 torchvision==0.18.1
 tqdm==4.66.4
-transformers==4.42.4
+transformers==4.43.1
 typing_extensions==4.12.2
 urllib3==2.2.2
 wcwidth==0.2.13

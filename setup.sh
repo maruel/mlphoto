@@ -14,5 +14,5 @@ source venv/bin/activate
 pip install -U pip
 pip install -U torch torchvision
 pip install -U accelerate diffusers einops insightface onnxruntime peft setuptools transformers
-#pip install git+https://github.com/TencentARC/PhotoMaker.git
+pip install git+https://github.com/TencentARC/PhotoMaker.git
 pip freeze > requirements-$(uname).txt
